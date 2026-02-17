@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tune Terrain</title>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Login Screen -->
+    <div id="login-screen" class="screen">
+      <svg class="logo-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="45" stroke="#2d7a6d" stroke-width="3" fill="none"/>
+        <circle cx="35" cy="40" r="8" fill="#2d7a6d" opacity="0.6"/>
+        <circle cx="65" cy="35" r="6" fill="#7c5cbf" opacity="0.6"/>
+        <circle cx="55" cy="60" r="10" fill="#2d7a6d" opacity="0.8"/>
+        <circle cx="30" cy="65" r="5" fill="#d4a574" opacity="0.6"/>
+        <circle cx="70" cy="58" r="7" fill="#7c5cbf" opacity="0.7"/>
+        <line x1="35" y1="40" x2="55" y2="60" stroke="#e8e6e3" stroke-width="1.5"/>
+        <line x1="65" y1="35" x2="55" y2="60" stroke="#e8e6e3" stroke-width="1.5"/>
+        <line x1="55" y1="60" x2="70" y2="58" stroke="#e8e6e3" stroke-width="1.5"/>
+      </svg>
+      <h1>Tune Terrain</h1>
+      <p class="subtitle">Discover the landscape of your music taste</p>
+      <button id="login-btn" class="btn-primary">Connect with Spotify</button>
+      <p class="privacy-note">We only read your listening history. Nothing is stored.</p>
+      
+      <div class="features">
+        <div class="feature">
+          <div class="feature-icon">📊</div>
+          <h3>Top Tracks</h3>
+          <p>See your most played songs ranked</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">🕸️</div>
+          <h3>Song Network</h3>
+          <p>Explore connections between your music</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">🎨</div>
+          <h3>Top Artists</h3>
+          <p>Discover your favorite artists</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main App -->
+    <div id="app-screen" class="screen hidden">
+      <header>
+        <h1>Tune Terrain</h1>
+        <div id="user-info"></div>
+      </header>
+
+      <div class="controls-bar">
+        <div class="time-range-selector">
+          <button class="time-btn" data-range="short_term">4 Weeks</button>
+          <button class="time-btn active" data-range="medium_term">6 Months</button>
+          <button class="time-btn" data-range="long_term">All Time</button>
+        </div>
+        <div class="stats-bar">
+          <div class="stat">
+            <div class="stat-value" id="track-count">--</div>
+            <div class="stat-label">Tracks</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value" id="artist-count">--</div>
+            <div class="stat-label">Artists</div>
+          </div>
+        </div>
+      </div>
+
+      <nav class="viz-nav">
+        <button class="nav-btn active" data-viz="topology">Top Tracks</button>
+        <button class="nav-btn" data-viz="network">Song Network</button>
+        <button class="nav-btn" data-viz="fingerprint">Top Artists</button>
+      </nav>
+
+      <main>
+        <div id="loading" class="hidden">
+          <div class="loading-spinner"></div>
+          <p>Analyzing your music...</p>
+        </div>
+        <div id="visualization"></div>
+      </main>
+    </div>
+  </div>
+
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

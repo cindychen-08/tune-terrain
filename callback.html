@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Connecting...</title>
+</head>
+<body>
+  <p>Connecting to Spotify...</p>
+  <script>
+    const CLIENT_ID = 'fc52d19b38c34744a7e469bcaacfaeb8';
+    const REDIRECT_URI = 'http://127.0.0.1:5500/callback.html';
+
+    async function handleCallback() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const code = urlParams.get('code');
+      const error = urlParams.get('error');
+
+      if (error) {
+        document.body.innerHTML = `<p>Login failed: ${error}. <a href="/">Try again</a></p>`;
+        return;
+      }
+
+      if (code) {
+        const codeVerifier = localStorage.getItem('code_verifier');
+        
+        if (!codeVerifier) {
+          document.body.innerHTML = '<p>Login failed: Missing verifier. <a href="/">Try again</a></p>';
+          return;
+        }
+
+        try {
+          const response = await fetch('https://accounts.spotify.com/api/token', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: new URLSearchParams({
+              client_id: CLIENT_ID,
+              grant_type: 'authorization_code',
+              code: code,
+              redirect_uri: REDIRECT_URI,
+              code_verifier: codeVerifier
+            })
+          });
+
+          const data = await response.json();
+
+          if (data.access_token) {
+            localStorage.setItem('spotify_token', data.access_token);
+            window.location.href = '/';
+          } else {
+            document.body.innerHTML = `<p>Login failed: ${data.error_description || 'Unknown error'}. <a href="/">Try again</a></p>`;
+          }
+        } catch (err) {
+          document.body.innerHTML = `<p>Login failed: ${err.message}. <a href="/">Try again</a></p>`;
+        }
+      } else {
+        document.body.innerHTML = '<p>Login failed: No code received. <a href="/">Try again</a></p>';
+      }
+    }
+
+    handleCallback();
+  </script>
+</body>
+</html>
